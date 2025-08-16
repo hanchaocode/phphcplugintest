@@ -1,0 +1,93 @@
+<?php
+
+return [
+    'debug' => true,
+    'controller_suffix' => 'Controller',
+    'controller_reuse' => false,
+    'version' => '1.0.0',
+    'options' => [
+        [
+            'name' => 'key',
+            'title' => '应用key',
+            'type' => 'string',
+            'content' => array (
+),
+            'value' => 'test',
+            'rule' => 'required',
+            'msg' => '',
+            'tip' => '',
+            'ok' => '',
+            'extend' => '',
+        ],
+        [
+            'name' => 'secret',
+            'title' => '密钥secret',
+            'type' => 'string',
+            'content' => array (
+),
+            'value' => '1142414',
+            'rule' => 'required',
+            'msg' => '',
+            'tip' => '',
+            'ok' => '',
+            'extend' => '',
+        ],
+        [
+            'name' => 'sign',
+            'title' => '签名',
+            'type' => 'string',
+            'content' => array (
+),
+            'value' => '3251515',
+            'rule' => 'required',
+            'msg' => '',
+            'tip' => '',
+            'ok' => '',
+            'extend' => '',
+        ],
+        [
+            'name' => 'template',
+            'title' => '短信模板',
+            'type' => 'array',
+            'content' => array (
+),
+            'value' => array (
+  'register' => 'SMS_114000222',
+  'resetpwd' => 'SMS_114002451',
+  'changepwd' => 'SMS_114000000',
+  'changemobile' => 'SMS_114000000',
+  'profile' => 'SMS_114000000',
+  'notice' => 'SMS_114000000',
+  'mobilelogin' => 'SMS_114000000',
+  'bind' => 'SMS_114000000',
+),
+            'rule' => 'required',
+            'msg' => '',
+            'tip' => '',
+            'ok' => '',
+            'extend' => '',
+        ],
+        [
+            'name' => 'template',
+            'title' => '短信模板',
+            'type' => 'array',
+            'content' => array (
+),
+            'value' => array (
+  'register' => 'SMS_114000222',
+  'resetpwd' => 'SMS_114002451',
+  'changepwd' => 'SMS_114000000',
+  'changemobile' => 'SMS_114000000',
+  'profile' => 'SMS_114000000',
+  'notice' => 'SMS_114000000',
+  'mobilelogin' => 'SMS_114000000',
+  'bind' => 'SMS_114000000',
+),
+            'rule' => 'required',
+            'msg' => '',
+            'tip' => '',
+            'ok' => '',
+            'extend' => '',
+        ],
+    ],
+];
