@@ -8,7 +8,6 @@
         "php": ">=8.1",
         "workerman/webman-framework": "^2.0",
         "saithink/saiadmin": "^5.1",
-        "openspout/openspout": "^4.0",
         "easywechat-composer/easywechat-composer": "^1.4",
         "yansongda/pay": "^3.0"
     },
