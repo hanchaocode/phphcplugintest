@@ -3,7 +3,9 @@
 namespace plugin\xypm\app\controller\admin;
 
 
+use plugin\saiadmin\app\logic\system\SystemConfigLogic;
 use plugin\saiadmin\basic\BaseController;
+use plugin\saiadmin\utils\Arr;
 use plugin\xypm\app\logic\ConfigLogic;
 use support\Request;
 use support\Response;
@@ -133,6 +135,11 @@ class ConfigController extends BaseController
 
     }
 
+    public function cdnurl(Request $request): Response
+    {
 
+
+        return $this->success(['cdnurl'=>cdnurl()]);
+    }
 
 }

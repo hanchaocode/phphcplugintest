@@ -31,19 +31,25 @@ class UserLogic extends BaseLogic
         $withSearch = array_keys($searchWhere);
         $data = $searchWhere;
         foreach ($withSearch as $k => $v) {
+            if($v == 'third_platform' && !empty($data[$v])) {
+                unset($data[$v]);
+                unset($withSearch[$k]);
+                continue;
+            }
             if ($data[$v] === '') {
                 unset($data[$v]);
                 unset($withSearch[$k]);
             }
         }
-        // ['group','third']
-        return $this->model->with('third')->withSearch($withSearch, $data);
-    }
+        //        return $this->model->with(['third'])->withSearch($withSearch, $data);
 
 
-    public  function options(){
-        return $this->model->select()->toArray();
-
+        $query = $this->model
+            ->join('xypm_third third', 'xypm_user.id = third.user_id');
+        if(!empty($searchWhere['third_platform'])){
+            $query = $query->where('xypm_third.platform', $searchWhere['third_platform']);
+        }
+        return $query->withSearch($withSearch, $data)->field('xypm_user.*,third.platform as third_platform  ');
     }
 
 

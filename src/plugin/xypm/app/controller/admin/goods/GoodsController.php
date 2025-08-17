@@ -52,6 +52,7 @@ class GoodsController extends BaseController
             ['title', ''],
             ['price', ''],
             ['line_price', ''],
+            ['category_ids', ''],
             ['views', ''],
             ['sales', ''],
             ['status', ''],

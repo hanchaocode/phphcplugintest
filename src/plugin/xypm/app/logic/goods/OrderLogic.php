@@ -31,12 +31,25 @@ class OrderLogic extends BaseLogic
         $withSearch = array_keys($searchWhere);
         $data = $searchWhere;
         foreach ($withSearch as $k => $v) {
+            if($v == 'user_nickname' && !empty($data[$v])) {
+                unset($data[$v]);
+                unset($withSearch[$k]);
+                continue;
+            }
             if ($data[$v] === '') {
                 unset($data[$v]);
                 unset($withSearch[$k]);
             }
         }
-        return $this->model->with(['item','user'])->withSearch($withSearch, $data);
+        //        return $this->model->with(['user'])->withSearch($withSearch, $data);
+
+
+        $query = $this->model
+            ->join('xypm_user user', 'user.id = xypm_goods_order.user_id');
+        if(!empty($searchWhere['user_nickname'])){
+            $query = $query->where('user.nickname', 'like', '%'.$searchWhere['user_nickname'].'%');
+        }
+        return $query->withSearch($withSearch, $data)->field('xypm_goods_order.*,user.nickname');
     }
 
 

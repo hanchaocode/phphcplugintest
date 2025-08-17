@@ -52,30 +52,6 @@ class Order extends Model
         $query->whereTime('createtime', 'between', $value);
     }
 
-    public function searchLinePriceAttr($query, $value)
-    {
-        // 确保 $value 是一个数组，并且有两个元素
-        if (is_array($value) && count($value) === 2) {
-            list($min, $max) = $value;
-
-            // 如果 min 和 max 都是有效值，则执行查询
-            if ($min !== '' || $max !== '') {
-                // 将空字符串转换为 null，这样可以使用数据库的 NULL 处理
-                $min = $min === '' ? null : $min;
-                $max = $max === '' ? null : $max;
-
-                // 构建查询条件
-                if ($min !== null && $max !== null) {
-                    $query->whereBetween('line_price', [$min, $max]);
-                } elseif ($min !== null) {
-                    $query->where('line_price', '>=', $min);
-                } elseif ($max !== null) {
-                    $query->where('line_price', '<=', $max);
-                }
-            }
-        }
-
-    }
 
     public function searchPaytimeAttr($query, $value)
     {

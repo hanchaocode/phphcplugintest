@@ -53,14 +53,10 @@ class User extends BaseNormalModel
         return $value;
     }
 
-//    是否需要手动创建组
-//    /**
-//     * 获取会员的组别
-//     */
-//    public function getGroupAttr($value, $data)
-//    {
-//        return UserGroup::get($data['group_id']);
-//    }
+    public function searchMobileAttr($query, $value)
+    {
+        $query->where('mobile', 'like', '%'.$value.'%');
+    }
 
     public function getStatusList()
     {

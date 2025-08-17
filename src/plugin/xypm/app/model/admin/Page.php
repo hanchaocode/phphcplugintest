@@ -26,7 +26,8 @@ class Page extends BaseNormalModel
     // 追加属性
     protected $append = [
         'type_text',
-        'status_text'
+        'status_text',
+        'deletetime_text',
     ];
     
     public function getTypeList()
@@ -68,6 +69,15 @@ class Page extends BaseNormalModel
     }
 
 
+    public function searchNamettr($query, $value)
+    {
+        $query->where('name', 'LIKE', "%$value%");
+    }
 
 
+    public function getDeletetimetextAttr($value, $data)
+    {
+        $value = $value ? $value : (isset($data['deletetime']) ? $data['deletetime'] : '');
+        return is_numeric($value) ? date("Y-m-d H:i:s", $value) : $value;
+    }
 }

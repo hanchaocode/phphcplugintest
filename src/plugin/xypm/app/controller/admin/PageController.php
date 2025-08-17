@@ -93,14 +93,18 @@ class PageController extends BaseController
                     'is_use'=>$params['is_use'],
                     'cover'=>$params['cover'],
                     'type'=>$params['type'],
+                    'createtime'=> time(),
+                    'updatetime'=> time(),
                     'page_token'=>$params['page_token'],
                     'page'=>json_encode($params['page']),
                     'item'=>json_encode($params['item'])
                 ];
-				$result = $this->logic->add($data);
+                $id = Page::insertGetId($data);
+
+
                 $pages = (new Page)
-                    ->where('page_token', 'eq', $data['page_token'])
-                    ->where('id', 'neq', $result['id'])
+                    ->where('page_token', $data['page_token'])
+                    ->where('id', '<>', $id)
                     ->select();
 				foreach ($pages as $k => $v) {
 					$v->is_use = 0;
@@ -111,16 +115,7 @@ class PageController extends BaseController
 	        }
 	        return $this->fail('参数不能为空');
 
-		$row = $this->logic->read($ids);
 
-		//通用配置
-		$appStyle = Config::getValueByName('appstyle');
-		if (!$row) {
-		    return $this->fail(trans('No Results were found'));
-		}
-
-
-	    return $this->success('更新成功');
     }
 
 
@@ -135,15 +130,9 @@ class PageController extends BaseController
         $id = $request->input('id', $id);
         $row = $this->logic->read($id);
 
-        //通用配置
-        $appStyle = Config::getValueByName('appstyle');
-        if (!$row) {
-            return $this->fail(trans('No Results were found'));
-        }
 
-//        $data['page'] = $row['page'];
-        $data['appStyle'] = $appStyle;
-//        $row['page'] = json_decode($row['page'],true);
+
+
         $row = json_decode($row,true);
         return $this->success($row);
     }
@@ -151,32 +140,36 @@ class PageController extends BaseController
 	/**
 	 * 历史记录
 	 */
-	public function history($token = null, $search = null)
+	public function history(Request $request): Response
 	{	
 		//设置过滤方法
 
 
-			$list = (new Page)->onlyTrashed()
-				->where(['page_token' => $token])
-				->where('name', 'like', '%'.$search.'%')
-				->select();
-			$result = array("total" => count($list), "rows" => $list);
-			return json($result);
+        $where = $request->more([
+            ['page_token', ''],
+            ['name', ''],
+        ]);
+
+        $query = $this->logic->search($where,true);
+
+        $result =$this->logic->getList($query);
+        return$this->success($result);
 
 	}
 
 	/**
 	 * 恢复历史
 	 */
-	public function recover(Request $request,$ids = null): Response{
+	public function recover(Request $request): Response{
 
-        $row = (new Page)->onlyTrashed()
-            ->where('id',$ids)
-            ->find();
-        if (!$row) {
-            return $this->fail('记录不存在');
-        }
-        return $this->success("拉取历史数据成功", "url", $row);
+        $id = $request->get('id');
+
+        $row = $this->logic->read($id,true);
+
+
+
+        $row = json_decode($row,true);
+        return $this->success($row,"拉取历史数据成功");
 	}
 
 	/**

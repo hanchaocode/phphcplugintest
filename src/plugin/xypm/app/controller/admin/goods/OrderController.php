@@ -45,7 +45,7 @@ class OrderController extends BaseController
         $where = $request->more([
             ['id', ''],
             ['order_sn', ''],
-//            ['user.nickname', ''],
+            ['user_nickname', ''],
             ['createtime', ''],
             ['paytime', ''],
             ['status', ''],
